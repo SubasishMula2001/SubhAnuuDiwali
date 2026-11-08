@@ -83,6 +83,24 @@
         .pulse-heart {
             animation: heartbeat 1.5s infinite ease-in-out;
         }
+
+        /* 3D Flip Card Effect */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden">
@@ -110,6 +128,11 @@
             <div class="w-3 h-3 bg-pink-400 rounded-full animate-ping"></div>
             <div class="w-3 h-3 bg-amber-400 rounded-full animate-ping delay-150"></div>
             <div class="w-3 h-3 bg-rose-400 rounded-full animate-ping delay-300"></div>
+        </div>
+
+        <!-- Mobile Touch to Play Music Notice -->
+        <div id="mobilePlayPrompt" class="mt-8 px-4 py-2 rounded-full bg-pink-500/20 border border-pink-400/40 text-pink-200 text-xs sm:text-sm animate-pulse">
+            ✨ Tap anywhere to play romantic song 🎵
         </div>
     </div>
 
@@ -254,6 +277,101 @@
         </div>
     </section>
 
+    <!-- NEW SECTION 1: "Reasons Why I Love You" Flip Cards -->
+    <section class="relative z-10 max-w-5xl mx-auto px-4 py-10 sm:py-16">
+        <div class="text-center mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-romantic text-pink-200 text-glow">
+                💖 Reasons Why You Are My World 💖
+            </h2>
+            <p class="text-pink-200/80 mt-2 text-xs sm:text-sm">
+                Tap each card to flip and reveal a sweet secret from Subh's heart!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <!-- Card 1 -->
+            <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped'); playChime(480); triggerFireworks();">
+                <div class="flip-card-inner relative w-full h-full">
+                    <div class="flip-card-front glass-card rounded-2xl p-4 flex flex-col justify-center items-center absolute inset-0 border border-pink-400/30">
+                        <span class="text-3xl mb-2">🌸</span>
+                        <h3 class="text-pink-200 font-semibold text-sm">Reason #1</h3>
+                        <p class="text-xs text-pink-300/60 mt-1">Tap to flip ✨</p>
+                    </div>
+                    <div class="flip-card-back glass-card-pink rounded-2xl p-4 flex items-center justify-center text-center absolute inset-0 border border-pink-400/50">
+                        <p class="text-xs sm:text-sm text-pink-100 italic leading-relaxed font-light">"Your caring heart always prays for my safety whenever I am outside."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped'); playChime(540); triggerFireworks();">
+                <div class="flip-card-inner relative w-full h-full">
+                    <div class="flip-card-front glass-card rounded-2xl p-4 flex flex-col justify-center items-center absolute inset-0 border border-pink-400/30">
+                        <span class="text-3xl mb-2">✨</span>
+                        <h3 class="text-pink-200 font-semibold text-sm">Reason #2</h3>
+                        <p class="text-xs text-pink-300/60 mt-1">Tap to flip ✨</p>
+                    </div>
+                    <div class="flip-card-back glass-card-pink rounded-2xl p-4 flex items-center justify-center text-center absolute inset-0 border border-pink-400/50">
+                        <p class="text-xs sm:text-sm text-pink-100 italic leading-relaxed font-light">"Your smile turns my worst days into bright celebrations."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped'); playChime(600); triggerFireworks();">
+                <div class="flip-card-inner relative w-full h-full">
+                    <div class="flip-card-front glass-card rounded-2xl p-4 flex flex-col justify-center items-center absolute inset-0 border border-pink-400/30">
+                        <span class="text-3xl mb-2">👑</span>
+                        <h3 class="text-pink-200 font-semibold text-sm">Reason #3</h3>
+                        <p class="text-xs text-pink-300/60 mt-1">Tap to flip ✨</p>
+                    </div>
+                    <div class="flip-card-back glass-card-pink rounded-2xl p-4 flex items-center justify-center text-center absolute inset-0 border border-pink-400/50">
+                        <p class="text-xs sm:text-sm text-pink-100 italic leading-relaxed font-light">"You are my safest home, my best friend, and my true queen."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="flip-card h-44 cursor-pointer" onclick="this.classList.toggle('flipped'); playChime(660); triggerFireworks();">
+                <div class="flip-card-inner relative w-full h-full">
+                    <div class="flip-card-front glass-card rounded-2xl p-4 flex flex-col justify-center items-center absolute inset-0 border border-pink-400/30">
+                        <span class="text-3xl mb-2">🎀</span>
+                        <h3 class="text-pink-200 font-semibold text-sm">Reason #4</h3>
+                        <p class="text-xs text-pink-300/60 mt-1">Tap to flip ✨</p>
+                    </div>
+                    <div class="flip-card-back glass-card-pink rounded-2xl p-4 flex items-center justify-center text-center absolute inset-0 border border-pink-400/50">
+                        <p class="text-xs sm:text-sm text-pink-100 italic leading-relaxed font-light">"I want to hold your hand and share every Diwali of my lifetime with you!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: Lifetime Love Promises Rangoli -->
+    <section class="relative z-10 max-w-3xl mx-auto px-4 py-10 sm:py-16 text-center">
+        <h2 class="text-2xl sm:text-3xl font-romantic text-amber-200 gold-glow mb-2">
+            🌸 Our Diwali Love Rangoli 🌸
+        </h2>
+        <p class="text-pink-200/80 mb-8 text-xs sm:text-sm">
+            Tap each glowing Rangoli petal to uncover Subh's promises to Anuuu 🎀💗
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div onclick="revealPromise(1, 'I promise to always keep you safe and happy!')" class="glass-card rounded-2xl p-4 cursor-pointer hover:border-amber-400/60 transition active:scale-95 flex flex-col items-center">
+                <span id="rangoliIcon1" class="text-3xl mb-2 transition-transform duration-300 hover:scale-125">🌺</span>
+                <p id="rangoliText1" class="text-xs text-pink-200/80">Promise #1</p>
+            </div>
+            <div onclick="revealPromise(2, 'I promise to always come back home safely to you!')" class="glass-card rounded-2xl p-4 cursor-pointer hover:border-amber-400/60 transition active:scale-95 flex flex-col items-center">
+                <span id="rangoliIcon2" class="text-3xl mb-2 transition-transform duration-300 hover:scale-125">🌻</span>
+                <p id="rangoliText2" class="text-xs text-pink-200/80">Promise #2</p>
+            </div>
+            <div onclick="revealPromise(3, 'I promise to never stop loving and protecting you!')" class="glass-card rounded-2xl p-4 cursor-pointer hover:border-amber-400/60 transition active:scale-95 flex flex-col items-center col-span-2 sm:col-span-1">
+                <span id="rangoliIcon3" class="text-3xl mb-2 transition-transform duration-300 hover:scale-125">🌹</span>
+                <p id="rangoliText3" class="text-xs text-pink-200/80">Promise #3</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Interactive Heart Box Gift -->
     <section class="relative z-10 max-w-3xl mx-auto px-4 py-10 sm:py-16 text-center">
         <h2 class="text-2xl sm:text-3xl font-romantic text-amber-200 gold-glow mb-3">
@@ -322,25 +440,21 @@
             }
         }
 
-        // Automatic audio playback on first interaction
-        window.addEventListener('click', () => {
+        // Dedicated Mobile & Desktop User Gesture Unlocker
+        function unlockAndPlayAudio() {
+            initAudio();
             if (!isAudioPlaying) {
                 startRomanceMusic();
             }
-        }, { once: true });
+        }
 
-        window.addEventListener('touchstart', () => {
-            if (!isAudioPlaying) {
-                startRomanceMusic();
-            }
-        }, { once: true });
+        // Attach touch & click listeners across the whole window for instant mobile playback
+        window.addEventListener('click', unlockAndPlayAudio);
+        window.addEventListener('touchstart', unlockAndPlayAudio);
+        window.addEventListener('pointerdown', unlockAndPlayAudio);
 
-        // Auto-play immediately on load
+        // Auto-play attempt on load
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                startRomanceMusic();
-            }, 500);
-
             // Extended display duration (5 seconds) so Anuuu can read & feel the message
             setTimeout(() => {
                 const loader = document.getElementById('loadingOverlay');
@@ -353,76 +467,97 @@
             }, 5000);
         });
 
-        // Richer multi-tone sound synthesis for a warm romantic song feeling
-        function playWarmRomanticChord(freq, duration = 3) {
+        // Soft Acoustic Piano Note Synthesizer for Deep Romantic Feel
+        function playRomanticPianoNote(freq, duration = 3.5, volume = 0.15) {
             if (!audioCtx) return;
             try {
-                // Primary note (Piano/Pad synth style)
-                const osc1 = audioCtx.createOscillator();
-                const gain1 = audioCtx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                // Fundamental Piano Sine Tone
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
                 
-                gain1.gain.setValueAtTime(0.01, audioCtx.currentTime);
-                gain1.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.4);
-                gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
                 
-                osc1.connect(gain1);
-                gain1.connect(audioCtx.destination);
-                osc1.start();
-                osc1.stop(audioCtx.currentTime + duration);
+                // Attack & Decay Envelope for Piano/Lullaby softness
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
 
-                // Warm harmony octave below for bass warmth
-                const osc2 = audioCtx.createOscillator();
-                const gain2 = audioCtx.createGain();
-                osc2.type = 'triangle';
-                osc2.frequency.setValueAtTime(freq / 2, audioCtx.currentTime);
+                // Overtone for Acoustic Sparkle
+                const overtone = audioCtx.createOscillator();
+                const overtoneGain = audioCtx.createGain();
+                overtone.type = 'triangle';
+                overtone.frequency.setValueAtTime(freq * 2, audioCtx.currentTime);
 
-                gain2.gain.setValueAtTime(0.01, audioCtx.currentTime);
-                gain2.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.5);
-                gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                overtoneGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                overtoneGain.gain.linearRampToValueAtTime(volume * 0.25, audioCtx.currentTime + 0.05);
+                overtoneGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + (duration * 0.6));
 
-                osc2.connect(gain2);
-                gain2.connect(audioCtx.destination);
-                osc2.start();
-                osc2.stop(audioCtx.currentTime + duration);
+                overtone.connect(overtoneGain);
+                overtoneGain.connect(audioCtx.destination);
+                overtone.start();
+                overtone.stop(audioCtx.currentTime + duration);
             } catch(e) {}
         }
 
         function playChime(freq) {
             initAudio();
-            playWarmRomanticChord(freq, 2);
+            playRomanticPianoNote(freq, 2.5, 0.2);
         }
 
         function startRomanceMusic() {
             initAudio();
+            if (isAudioPlaying) return;
             isAudioPlaying = true;
             document.getElementById('musicIcon').classList.add('animate-spin');
 
-            // Warm romantic song progression: F major 7 & Bb major 7 romantic lullaby theme
-            const romanticProgression = [
-                349.23, 440.00, 523.25, 659.25, // F, A, C, E
-                293.66, 349.23, 440.00, 523.25, // D, F, A, C
-                261.63, 329.63, 392.00, 493.88, // C, E, G, B
-                220.00, 261.63, 329.63, 392.00  // A, C, E, G
+            // Beautiful Romantic Love Melody Sequence (C Major / A Minor Soft Piano Arpeggio)
+            const loveMelody = [
+                // Phrase 1: Soft Love Awakening
+                { f: 523.25, d: 3.5 }, // C5
+                { f: 659.25, d: 3.0 }, // E5
+                { f: 783.99, d: 4.0 }, // G5
+                { f: 659.25, d: 2.5 }, // E5
+
+                // Phrase 2: Deep Emotional Warmth
+                { f: 440.00, d: 3.5 }, // A4
+                { f: 523.25, d: 3.0 }, // C5
+                { f: 659.25, d: 4.0 }, // E5
+                { f: 587.33, d: 2.5 }, // D5
+
+                // Phrase 3: Sweet Promise
+                { f: 392.00, d: 3.5 }, // G4
+                { f: 493.88, d: 3.0 }, // B4
+                { f: 587.33, d: 4.0 }, // D5
+                { f: 523.25, d: 3.0 }  // C5
             ];
+            
             let noteIdx = 0;
 
             melodyInterval = setInterval(() => {
                 if (!isAudioPlaying) return;
-                const note = romanticProgression[noteIdx % romanticProgression.length];
-                playWarmRomanticChord(note, 3.5);
+                const currentNote = loveMelody[noteIdx % loveMelody.length];
                 
-                // Play melodic embellishment note
+                // Play main melody note
+                playRomanticPianoNote(currentNote.f, currentNote.d, 0.16);
+                
+                // Play soft bass note companion
+                playRomanticPianoNote(currentNote.f / 2, currentNote.d + 1.0, 0.08);
+
+                // Gentle harmony accent half a second later
                 setTimeout(() => {
                     if (isAudioPlaying) {
-                        const subNote = romanticProgression[(noteIdx + 2) % romanticProgression.length];
-                        playWarmRomanticChord(subNote, 2.5);
+                        playRomanticPianoNote(currentNote.f * 1.25, 2.0, 0.05);
                     }
-                }, 600);
+                }, 450);
 
                 noteIdx++;
-            }, 1400);
+            }, 1200);
         }
 
         function stopRomanceMusic() {
@@ -482,6 +617,16 @@
             title.innerHTML = 'An Everlasting Heart-to-Heart Connection';
             title.classList.add('text-pink-300');
             desc.innerHTML = 'This Diwali gift is an unbreakable emotional connection and unlimited love forever between Subh 🖤 and Anuuu 🎀💗!';
+        }
+
+        // Rangoli Promise Reveal Logic
+        function revealPromise(num, promiseText) {
+            playChime(500 + num * 50);
+            triggerFireworks();
+            const icon = document.getElementById(`rangoliIcon${num}`);
+            const text = document.getElementById(`rangoliText${num}`);
+            icon.innerText = '💖';
+            text.innerHTML = `<span class="text-amber-200 font-medium">${promiseText}</span>`;
         }
 
         // Release Lantern Logic
