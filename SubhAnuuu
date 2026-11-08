@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali My Love 🪔✨ | Anuuu 🎀💗 & Subh 🖤</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0d0614;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .font-cursive {
+            font-family: 'Great Vibes', cursive;
+        }
+        .font-romantic {
+            font-family: 'Dancing Script', cursive;
+        }
+        /* Custom Glowing & Shimmer Effects */
+        .diya-glow {
+            box-shadow: 0 0 25px 8px rgba(255, 170, 0, 0.6), 0 0 50px 15px rgba(255, 100, 0, 0.4);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(255, 182, 193, 0.8), 0 0 25px rgba(244, 114, 182, 0.6);
+        }
+        .gold-glow {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(217, 119, 6, 0.6);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 192, 203, 0.18);
+        }
+        .glass-card-pink {
+            background: rgba(244, 114, 182, 0.08);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(244, 114, 182, 0.25);
+        }
+        
+        /* Flame Animation */
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+            20% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+            40% { transform: scale(0.95) rotate(-1deg); opacity: 0.85; }
+            60% { transform: scale(1.1) rotate(1deg); opacity: 1; }
+            80% { transform: scale(1.05) rotate(-2deg); opacity: 0.9; }
+        }
+        .flame-animation {
+            animation: flicker 1.4s infinite ease-in-out;
+            transform-origin: center bottom;
+        }
+
+        /* Floating Hearts / Floating Lanterns */
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.6) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.1) rotate(20deg); opacity: 0; }
+        }
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 12s linear infinite;
+        }
+
+        /* Pulse heartbeat */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+        .pulse-heart {
+            animation: heartbeat 1.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden">
+
+    <!-- Loading Screen Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-[#0d0614] transition-opacity duration-1000 px-6 text-center">
+        <!-- Floating Diya Icon -->
+        <div class="relative mb-6">
+            <div class="absolute inset-0 rounded-full bg-pink-500/30 blur-2xl animate-pulse"></div>
+            <div class="text-6xl sm:text-7xl animate-bounce">
+                🪔✨
+            </div>
+        </div>
+        
+        <!-- Loading Text -->
+        <h2 class="text-2xl sm:text-4xl font-romantic text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200 gold-glow mb-3 leading-snug">
+            Your Subh made something special for you...
+        </h2>
+        <p class="text-sm sm:text-base text-pink-200/80 font-light tracking-wide animate-pulse">
+            Please wait 🎀💗
+        </p>
+
+        <!-- Shimmer Spinner -->
+        <div class="mt-8 flex items-center justify-center space-x-2">
+            <div class="w-3 h-3 bg-pink-400 rounded-full animate-ping"></div>
+            <div class="w-3 h-3 bg-amber-400 rounded-full animate-ping delay-150"></div>
+            <div class="w-3 h-3 bg-rose-400 rounded-full animate-ping delay-300"></div>
+        </div>
+    </div>
+
+    <!-- Background Starfield & Sparkle Canvas -->
+    <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Floating Background Elements Container -->
+    <div id="floatingContainer" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Music / Audio Toggle Floating Button (Mobile Friendly & Non-blocking) -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="musicBtn" onclick="toggleAudio()" class="glass-card w-11 h-11 rounded-full flex items-center justify-center text-pink-300 hover:text-white hover:bg-pink-950/40 transition duration-300 shadow-xl border border-pink-500/30 active:scale-95" title="Toggle Romance Music">
+            <i id="musicIcon" class="fas fa-music text-base animate-pulse"></i>
+        </button>
+    </div>
+
+    <!-- Hero / Welcome Section -->
+    <header class="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 py-12 text-center">
+        <!-- Floating Romantic Tag Header -->
+        <div class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full glass-card-pink text-pink-200 text-xs sm:text-sm mb-4 border border-pink-400/30 animate-bounce">
+            <span class="text-yellow-400 text-xs sm:text-sm">✨</span>
+            <span class="font-medium">A Special Diwali Surprise for My Queen</span>
+            <span class="text-yellow-400 text-xs sm:text-sm">✨</span>
+        </div>
+
+        <!-- Names Badge matching style request -->
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-cursive text-pink-300 mb-1">
+            From 🖤Subh🎀 to
+        </h2>
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-cursive text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200 text-glow my-2 tracking-wide leading-tight px-2">
+            Anuuu 🎀💗
+        </h1>
+
+        <p class="max-w-xl text-base sm:text-lg md:text-xl text-amber-100/90 font-light mt-3 leading-relaxed px-2">
+            You are the light that brightens my darkest nights and the warmth in every Diwali diya. Scroll down to discover my heart's wishes for you! 🪔✨
+        </p>
+
+        <!-- Interactive Main Diya Button -->
+        <div class="mt-8 sm:mt-10 cursor-pointer group flex flex-col items-center" onclick="triggerFireworks(); playChime(440);">
+            <div class="relative w-28 h-28 sm:w-32 sm:h-32 flex justify-center items-center">
+                <div class="absolute inset-0 rounded-full bg-amber-500/20 blur-xl group-hover:bg-amber-500/40 transition-all duration-500"></div>
+                
+                <!-- Diya SVG Graphic -->
+                <svg viewBox="0 0 100 100" class="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-2xl transition-transform duration-300 group-hover:scale-110 active:scale-95">
+                    <!-- Flame -->
+                    <path class="flame-animation fill-amber-400" d="M50 15 C50 15, 62 35, 62 45 C62 55, 52 60, 50 60 C48 60, 38 55, 38 45 C38 35, 50 15, 50 15 Z" />
+                    <path class="flame-animation fill-yellow-200" d="M50 25 C50 25, 57 38, 57 45 C57 52, 53 55, 50 55 C47 55, 43 52, 43 45 C43 38, 50 25, 50 25 Z" />
+                    <!-- Diya Bowl -->
+                    <path fill="url(#diyaGrad)" d="M15 55 C20 82, 80 82, 85 55 C70 65, 30 65, 15 55 Z" />
+                    <!-- Gold Rim Decor -->
+                    <path fill="#fef08a" d="M15 55 C35 63, 65 63, 85 55 C80 58, 20 58, 15 55 Z" />
+                    
+                    <defs>
+                        <linearGradient id="diyaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#b45309" />
+                            <stop offset="50%" stop-color="#78350f" />
+                            <stop offset="100%" stop-color="#451a03" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <span class="text-[10px] sm:text-xs tracking-widest text-pink-300 uppercase mt-2 group-hover:text-amber-300 transition-colors">Tap Diya for Sparkles 🔥</span>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-pink-300/60 animate-bounce">
+            <i class="fas fa-chevron-down text-lg"></i>
+        </div>
+    </header>
+
+    <!-- Interactive Diya Lighting Trail Section -->
+    <section class="relative z-10 max-w-5xl mx-auto px-4 py-10 sm:py-16">
+        <div class="text-center mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-romantic text-amber-200 gold-glow">
+                🪔 Light Our Diwali Diyas 🪔
+            </h2>
+            <p class="text-pink-200/80 mt-2 text-xs sm:text-sm md:text-base">
+                Click each Diya to light up a special message from 🖤Subh🎀 to my Anuuu 🎀💗
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            <!-- Diya 1 -->
+            <div id="diyaCard1" onclick="lightDiya(1, 'Your smile shines brighter than a million Diwali fireworks, Anuuu! 🎆💗')" class="glass-card rounded-2xl p-5 sm:p-6 text-center cursor-pointer hover:border-amber-400/50 transition duration-300 transform active:scale-98">
+                <div id="diyaIcon1" class="text-3xl sm:text-4xl text-amber-500/40 mb-3 transition-colors">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-pink-200 mb-2">My Brightest Light</h3>
+                <p id="diyaText1" class="text-xs sm:text-sm text-gray-400 italic">Tap to light this diya...</p>
+            </div>
+
+            <!-- Diya 2 -->
+            <div id="diyaCard2" onclick="lightDiya(2, 'Every day with you feels like a celebration of love and happiness. Happy Diwali My Princess! 👑✨')" class="glass-card rounded-2xl p-5 sm:p-6 text-center cursor-pointer hover:border-amber-400/50 transition duration-300 transform active:scale-98">
+                <div id="diyaIcon2" class="text-3xl sm:text-4xl text-amber-500/40 mb-3 transition-colors">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-pink-200 mb-2">Eternal Blessing</h3>
+                <p id="diyaText2" class="text-xs sm:text-sm text-gray-400 italic">Tap to light this diya...</p>
+            </div>
+
+            <!-- Diya 3 -->
+            <div id="diyaCard3" onclick="lightDiya(3, 'I promise to always keep your life full of warmth, laughter, and endless love. Forever yours, Subh 🖤')" class="glass-card rounded-2xl p-5 sm:p-6 text-center cursor-pointer hover:border-amber-400/50 transition duration-300 transform active:scale-98">
+                <div id="diyaIcon3" class="text-3xl sm:text-4xl text-amber-500/40 mb-3 transition-colors">
+                    <i class="fas fa-sparkles"></i>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-pink-200 mb-2">Forever Promise</h3>
+                <p id="diyaText3" class="text-xs sm:text-sm text-gray-400 italic">Tap to light this diya...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sweet Memory & Love Letter Section -->
+    <section class="relative z-10 max-w-4xl mx-auto px-4 py-10 sm:py-16">
+        <div class="glass-card-pink rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden shadow-2xl border border-pink-400/30">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="text-center mb-6 sm:mb-8">
+                <span class="text-3xl sm:text-4xl">💌</span>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-cursive text-pink-200 mt-2">
+                    A Diwali Love Note For Anuuu 🎀💗
+                </h2>
+                <div class="w-20 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto mt-3"></div>
+            </div>
+
+            <div class="space-y-4 sm:space-y-6 text-pink-100/90 text-sm sm:text-base md:text-lg leading-relaxed font-light">
+                <p>
+                    My Dearest <strong class="text-pink-300 font-normal">Anuuu 🎀💗</strong>,
+                </p>
+                <p>
+                    This Diwali, while the whole world lights lamps outside their homes, my entire world is already illuminated by you. You came into my life like a bright, warm flame that dispelled all dark moments and filled my days with warmth and endless happiness.
+                </p>
+                <p>
+                    Thank you for being my strength, my best friend, and my most cherished love. Looking at you makes me realize how blessed I am every single day.
+                </p>
+                <p class="text-right font-cursive text-2xl sm:text-3xl text-pink-300 mt-6">
+                    Forever Yours,<br>
+                    <span class="text-xl sm:text-2xl text-white font-normal">🖤Subh🎀</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Heart Box Gift -->
+    <section class="relative z-10 max-w-3xl mx-auto px-4 py-10 sm:py-16 text-center">
+        <h2 class="text-2xl sm:text-3xl font-romantic text-amber-200 gold-glow mb-3">
+            🎁 A Secret Diwali Gift For You
+        </h2>
+        <p class="text-pink-200/80 mb-6 text-xs sm:text-sm">
+            Click the heart box below to open your Diwali surprise gift!
+        </p>
+
+        <div class="flex justify-center">
+            <div id="giftBox" onclick="openGift()" class="glass-card rounded-3xl p-6 sm:p-10 cursor-pointer transform active:scale-95 hover:scale-105 transition-all duration-300 max-w-md w-full border border-pink-500/40 relative">
+                <div id="giftIcon" class="text-5xl sm:text-7xl text-pink-400 pulse-heart my-3 sm:my-4">
+                    🎁
+                </div>
+                <h3 id="giftTitle" class="text-xl sm:text-2xl font-bold text-pink-200 mb-2">Tap to Unwrap</h3>
+                <p id="giftDesc" class="text-pink-300/80 text-xs sm:text-sm">Prepared with endless love from 🖤Subh🎀</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Sky Lantern Wish Section -->
+    <section class="relative z-10 max-w-2xl mx-auto px-4 py-10 sm:py-16 text-center">
+        <div class="glass-card rounded-3xl p-6 sm:p-8 border border-amber-400/20">
+            <h2 class="text-2xl sm:text-3xl font-romantic text-amber-200 mb-2">
+                🏮 Release a Sky Lantern 🏮
+            </h2>
+            <p class="text-pink-200/80 text-xs sm:text-sm mb-5">
+                Type your sweet Diwali wish below and send it flying into the starry sky!
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input id="wishInput" type="text" placeholder="Write your love wish here, Anuuu..." class="w-full px-4 py-3 rounded-full bg-white/10 border border-pink-400/30 text-white placeholder-pink-300/50 focus:outline-none focus:border-pink-400 text-xs sm:text-sm">
+                <button onclick="releaseLantern()" class="w-full sm:w-auto px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-semibold text-xs sm:text-sm hover:opacity-90 active:scale-95 transition shadow-lg shrink-0">
+                    Send Lantern ✨
+                </button>
+            </div>
+        </div>
+
+        <!-- Added Romantic Declaration Banner -->
+        <div class="mt-8 text-center">
+            <h3 class="text-3xl sm:text-5xl font-cursive text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200 text-glow tracking-wider animate-pulse">
+                I Love You Anuuu 🎀💗
+            </h3>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-10 py-10 text-center text-xs text-pink-300/60 border-t border-white/5">
+        <p>Made with endless love by <span class="text-pink-200">🖤Subh🎀</span> for <span class="text-pink-200">Anuuu 🎀💗</span></p>
+        <p class="mt-1">Happy Diwali 🪔✨</p>
+    </footer>
+
+    <!-- Custom JavaScript Logic -->
+    <script>
+        // Global Audio Context & Ambient Music Synthesizer
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let melodyInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Automatic audio playback on first interaction
+        window.addEventListener('click', () => {
+            if (!isAudioPlaying) {
+                startRomanceMusic();
+            }
+        }, { once: true });
+
+        window.addEventListener('touchstart', () => {
+            if (!isAudioPlaying) {
+                startRomanceMusic();
+            }
+        }, { once: true });
+
+        // Auto-play immediately on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                startRomanceMusic();
+            }, 500);
+
+            // Extended display duration (5 seconds) so Anuuu can read & feel the message
+            setTimeout(() => {
+                const loader = document.getElementById('loadingOverlay');
+                if (loader) {
+                    loader.classList.add('opacity-0');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 1000);
+                }
+            }, 5000);
+        });
+
+        // Richer multi-tone sound synthesis for a warm romantic song feeling
+        function playWarmRomanticChord(freq, duration = 3) {
+            if (!audioCtx) return;
+            try {
+                // Primary note (Piano/Pad synth style)
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gain1.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.4);
+                gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start();
+                osc1.stop(audioCtx.currentTime + duration);
+
+                // Warm harmony octave below for bass warmth
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(freq / 2, audioCtx.currentTime);
+
+                gain2.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.5);
+                gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start();
+                osc2.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playChime(freq) {
+            initAudio();
+            playWarmRomanticChord(freq, 2);
+        }
+
+        function startRomanceMusic() {
+            initAudio();
+            isAudioPlaying = true;
+            document.getElementById('musicIcon').classList.add('animate-spin');
+
+            // Warm romantic song progression: F major 7 & Bb major 7 romantic lullaby theme
+            const romanticProgression = [
+                349.23, 440.00, 523.25, 659.25, // F, A, C, E
+                293.66, 349.23, 440.00, 523.25, // D, F, A, C
+                261.63, 329.63, 392.00, 493.88, // C, E, G, B
+                220.00, 261.63, 329.63, 392.00  // A, C, E, G
+            ];
+            let noteIdx = 0;
+
+            melodyInterval = setInterval(() => {
+                if (!isAudioPlaying) return;
+                const note = romanticProgression[noteIdx % romanticProgression.length];
+                playWarmRomanticChord(note, 3.5);
+                
+                // Play melodic embellishment note
+                setTimeout(() => {
+                    if (isAudioPlaying) {
+                        const subNote = romanticProgression[(noteIdx + 2) % romanticProgression.length];
+                        playWarmRomanticChord(subNote, 2.5);
+                    }
+                }, 600);
+
+                noteIdx++;
+            }, 1400);
+        }
+
+        function stopRomanceMusic() {
+            isAudioPlaying = false;
+            if (melodyInterval) clearInterval(melodyInterval);
+            document.getElementById('musicIcon').classList.remove('animate-spin');
+        }
+
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                stopRomanceMusic();
+            } else {
+                startRomanceMusic();
+            }
+        }
+
+        // Firework Confetti Trigger
+        function triggerFireworks() {
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#f472b6', '#fbbf24', '#f43f5e', '#a855f7']
+            });
+        }
+
+        // Light Diya Logic
+        function lightDiya(num, text) {
+            playChime(520 + num * 60);
+            triggerFireworks();
+
+            const card = document.getElementById(`diyaCard${num}`);
+            const icon = document.getElementById(`diyaIcon${num}`);
+            const textEl = document.getElementById(`diyaText${num}`);
+
+            card.classList.add('diya-glow', 'border-amber-400');
+            icon.classList.remove('text-amber-500/40');
+            icon.classList.add('text-amber-400', 'flame-animation');
+            
+            textEl.innerHTML = `<span class="text-pink-100 font-normal">${text}</span>`;
+        }
+
+        // Open Gift Box Logic
+        let giftOpened = false;
+        function openGift() {
+            if (giftOpened) return;
+            giftOpened = true;
+
+            playChime(660);
+            triggerFireworks();
+
+            const icon = document.getElementById('giftIcon');
+            const title = document.getElementById('giftTitle');
+            const desc = document.getElementById('giftDesc');
+
+            icon.innerHTML = '💖✨';
+            title.innerHTML = 'An Everlasting Heart-to-Heart Connection';
+            title.classList.add('text-pink-300');
+            desc.innerHTML = 'This Diwali gift is an unbreakable emotional connection and unlimited love forever between Subh 🖤 and Anuuu 🎀💗!';
+        }
+
+        // Release Lantern Logic
+        function releaseLantern() {
+            const input = document.getElementById('wishInput');
+            const wishText = input.value.trim();
+
+            if (!wishText) {
+                alert("Please write a small wish for Anuuu first! 💗");
+                return;
+            }
+
+            playChime(580);
+            triggerFireworks();
+
+            // Create floating lantern element with text
+            const lantern = document.createElement('div');
+            lantern.className = 'floating-element flex flex-col items-center justify-center';
+            lantern.style.left = Math.random() * 80 + 10 + 'vw';
+            lantern.style.animationDuration = '14s';
+
+            lantern.innerHTML = `
+                <div class="w-12 h-16 bg-gradient-to-t from-amber-500 via-rose-500 to-amber-300 rounded-t-full rounded-b-md shadow-2xl flex items-center justify-center diya-glow border border-yellow-200/50 opacity-90">
+                    <span class="text-xs font-bold text-white text-center px-1">🪔</span>
+                </div>
+                <span class="text-[10px] text-pink-200 mt-1 bg-black/50 px-2 py-0.5 rounded-full border border-pink-400/30">${wishText}</span>
+            `;
+
+            document.getElementById('floatingContainer').appendChild(lantern);
+
+            input.value = '';
+            setTimeout(() => {
+                lantern.remove();
+            }, 14000);
+        }
+
+        // Starfield Canvas Animation
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const stars = Array.from({ length: 70 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2 + 0.5,
+            alpha: Math.random(),
+            speed: Math.random() * 0.02 + 0.005
+        }));
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) {
+                    star.speed = -star.speed;
+                }
+
+                ctx.fillStyle = `rgba(255, 220, 230, ${Math.abs(star.alpha)})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+
+        // Spawn background floating hearts
+        function spawnFloatingHearts() {
+            const container = document.getElementById('floatingContainer');
+            const icons = ['💗', '🎀', '🪔', '✨', '💖'];
+
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'floating-element text-xl sm:text-2xl';
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 90 + 'vw';
+                el.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                container.appendChild(el);
+
+                setTimeout(() => el.remove(), 14000);
+            }, 2500);
+        }
+        spawnFloatingHearts();
+    </script>
+</body>
+</html>
